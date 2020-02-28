@@ -92,5 +92,67 @@ public class AvaliadorTest {
         ));
         
     }
+    
+    
+	
+    @Test
+    public void deveEntenderLeilaoComLancesEmOrdemRandomica() {
+       
+        Leilao leilao = new Leilao("Playstation 3 Novo");
+
+        leilao.propoe(new Lance(joao,200.0));
+        leilao.propoe(new Lance(maria,450.0));
+        leilao.propoe(new Lance(joao,120.0));
+        leilao.propoe(new Lance(maria,700.0));
+        leilao.propoe(new Lance(joao,630.0));
+        leilao.propoe(new Lance(maria,230.0));
+
+     
+        leiloeiro.avalia(leilao);
+
+        assertEquals(700.0, leiloeiro.getMaiorLance(), 0.0001);
+        assertEquals(120.0, leiloeiro.getMenorLance(), 0.0001);
+    }
+    
+    
+    @Test
+    public void deveEntenderLeilaoComLancesEmOrdemDecrescente() {
+     
+        Leilao leilao = new Leilao("Playstation 3 Novo");
+
+        leilao.propoe(new Lance(joao,400.0));
+        leilao.propoe(new Lance(maria,300.0));
+        leilao.propoe(new Lance(joao,200.0));
+        leilao.propoe(new Lance(maria,100.0));
+
+      
+        leiloeiro.avalia(leilao);
+
+        assertEquals(400.0, leiloeiro.getMaiorLance(), 0.0001);
+        assertEquals(100.0, leiloeiro.getMenorLance(), 0.0001);
+    }
+    
+    
+
+    @Test
+    public void deveDevolverTodosLancesCasoNaoHajaNoMinimo3() {
+     
+        Leilao leilao = new Leilao("Playstation 3 Novo");
+
+        leilao.propoe(new Lance(joao, 100.0));
+        leilao.propoe(new Lance(maria, 200.0));
+
+      
+        leiloeiro.avalia(leilao);
+
+        List<Lance> maiores = leiloeiro.getTresMaiores();
+
+        assertEquals(2, maiores.size());
+        assertEquals(200, maiores.get(0).getValor(), 0.00001);
+        assertEquals(100, maiores.get(1).getValor(), 0.00001);
+    }
+
+    
+    
      
 }

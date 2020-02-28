@@ -7,11 +7,17 @@ import br.com.impacta.leilao.dominio.Leilao;
 import br.com.impacta.leilao.infra.dao.LeilaoDao;
 
 public class EncerradorDeLeilao {
+	
+    private final RepositorioDeLeiloes dao;
 
+    public EncerradorDeLeilao(RepositorioDeLeiloes dao) {
+        this.dao = dao;
+    }
+    
+    
 	private int total = 0;
 
 	public void encerra() {
-		LeilaoDao dao = new LeilaoDao();
 		List<Leilao> todosLeiloesCorrentes = dao.correntes();
 
 		for (Leilao leilao : todosLeiloesCorrentes) {
