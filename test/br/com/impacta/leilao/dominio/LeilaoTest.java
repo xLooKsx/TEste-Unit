@@ -44,6 +44,31 @@ public class LeilaoTest {
 	}
 	
 	@Test
+	public void naoDeveAceitarQuatroLancesSeguidosDoMesmoUsuario() {
+		Usuario steveJobs = new Usuario("Steve Jobs");
+		Leilao leilao = new Leilao("Macbook Pro 15");
+		leilao.propoe(new Lance(steveJobs, 1000));
+		leilao.propoe(new Lance(steveJobs, 3000));
+		leilao.propoe(new Lance(steveJobs, 3000));
+		leilao.propoe(new Lance(steveJobs, 3000));
+		
+		assertEquals(1, leilao.getLances().size());
+		assertEquals(1000.0, leilao.getLances().get(0).getValor(), 0.00001);
+	}
+	
+	@Test
+	public void naoDeveAceitarTresLancesSeguidosDoMesmoUsuario() {
+		Usuario steveJobs = new Usuario("Steve Jobs");
+		Leilao leilao = new Leilao("Macbook Pro 15");
+		leilao.propoe(new Lance(steveJobs, 5000));
+		leilao.propoe(new Lance(steveJobs, 1000));
+		leilao.propoe(new Lance(steveJobs, 3000));
+		
+		assertEquals(1, leilao.getLances().size());
+		assertEquals(5000.0, leilao.getLances().get(0).getValor(), 0.00001);
+	}
+	
+	@Test
 	public void naoDeveAceitarMaisDoQue5LancesDeUmMesmoUsuario() {
 		Usuario steveJobs = new Usuario("Steve Jobs");
 		Usuario billGates = new Usuario("Bill Gates");
